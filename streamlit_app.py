@@ -39,13 +39,6 @@ if closed_agencies_file and accounts_file:
 
         st.success("Files processed successfully!")
 
-        # Display the processed data
-        st.subheader("Updated Accounts")
-        st.dataframe(filtered)
-
-        st.subheader("Missing Agencies")
-        st.dataframe(missing_agencies)
-
         # Button to generate output file
         if st.button('Generate Output File'):
             output = BytesIO()
