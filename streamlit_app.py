@@ -10,6 +10,9 @@ st.title("Agency Account Update")
 closed_agencies_file = st.file_uploader("Upload Closed Agencies File", type=["xlsx"])
 accounts_file = st.file_uploader("Upload Salesforce File", type=["xlsx"])
 
+# Placeholder for the result
+output = None
+
 if closed_agencies_file and accounts_file:
     try:
         # Load the data
@@ -43,14 +46,16 @@ if closed_agencies_file and accounts_file:
         st.subheader("Missing Agencies")
         st.dataframe(missing_agencies)
 
-        # Provide a download link for the results
-        output = BytesIO()
-        with pd.ExcelWriter(output, engine='openpyxl') as writer:
-            filtered.to_excel(writer, sheet_name="Updated Accounts", index=False)
-            missing_agencies.to_excel(writer, sheet_name="Missing Agencies", index=False)
-        output.seek(0)
+        # Button to generate output file
+        if st.button('Generate Output File'):
+            output = BytesIO()
+            with pd.ExcelWriter(output, engine='openpyxl') as writer:
+                filtered.to_excel(writer, sheet_name="Updated Accounts", index=False)
+                missing_agencies.to_excel(writer, sheet_name="Missing Agencies", index=False)
+            output.seek(0)
 
-        st.download_button(label="Download Processed File", data=output, file_name="Updated_Accounts.xlsx", mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+            st.download_button(label="Download Processed File", data=output, file_name="Updated_Accounts.xlsx", mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+
 
     except Exception as e:
         st.error(f"An error occurred: {e}")
