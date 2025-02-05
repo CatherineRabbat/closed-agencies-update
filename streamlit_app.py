@@ -34,6 +34,9 @@ if closed_agencies_file and accounts_file:
         # Select required columns
         filtered = merged[['account id', 'account name', 'iata number', 'iata status', 'parent account id', 'ultimate parent.1']]
 
+        # Capitalize column names for output
+        filtered.columns = filtered.columns.str.title()
+        
         # Identify closed agencies not found in Salesforce
         missing_agencies = closed_agencies[~closed_agencies["iata number"].isin(accounts["iata number"])]
 
