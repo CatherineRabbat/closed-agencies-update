@@ -23,7 +23,7 @@ if closed_agencies_file and accounts_file:
         merged = accounts.merge(closed_agencies, left_on="iata number", right_on="iata number", how="inner")
 
         # Update IATA status to "Not Valid"
-        merged.loc[:, 'iata number'] = "Not Valid"
+        merged.loc[:, 'iata status'] = "Not Valid"
 
         # Add "CLOSED-" prefix only if it's not already there
         merged.loc[~merged['account name'].str.startswith("CLOSED-", na=False), 'account name'] = "CLOSED-" + merged['account name']
