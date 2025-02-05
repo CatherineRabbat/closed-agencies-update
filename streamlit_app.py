@@ -39,7 +39,7 @@ if closed_agencies_file and accounts_file:
         
         # Capitalize column names for output
         filtered.columns = filtered.columns.str.title()
-        missing_agencies.columns = filtered.columns.str.title()
+        missing_agencies.columns = missing_agencies.columns.str.title()
         
         st.success("Files processed successfully!")
 
